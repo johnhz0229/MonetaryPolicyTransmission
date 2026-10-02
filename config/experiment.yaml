@@ -1,0 +1,58 @@
+# First live round: forecast the 27 Oct 2026 BLS release and the September 2026
+# CES wave before either is published. See PREREGISTRATION.md.
+experiment_id: ea-2026q3-live
+
+# Hard cap on OpenRouter spend for one invocation of the CLI (USD).
+budget_usd: 10.0
+
+# Model panel ordered by release date. A model's release date is a hard upper
+# bound on what it can know, so the panel forms a knowledge gradient around the
+# 2026 energy-shock tightening (first hike effective 17 Jun 2026).
+# Pin dated versions only; never "~...-latest" aliases, which move.
+models:
+  - id: qwen/qwen3-235b-a22b-2507
+    released: 2025-07-21
+    arm: clean          # released before the 2026 shock
+  - id: deepseek/deepseek-v3.2
+    released: 2025-12-01
+    arm: clean
+  - id: deepseek/deepseek-v4-flash
+    released: 2026-04-24
+    arm: pre-hike       # may know the shock's start, not the hikes
+  - id: deepseek/deepseek-v4.1-flash
+    released: 2026-09-10
+    arm: post-hike      # may know June/July 2026; contamination-risk arm
+
+sampling:
+  temperature: 1.0
+  max_tokens: 1200
+  bank_samples: 30        # per bank archetype per model
+  household_samples: 8    # per household persona per model (15 personas x 4 countries)
+  probe_samples: 3
+
+# Information sets. Each task only sees data that was published by its as-of date,
+# matching when the real survey was in the field.
+information_sets:
+  ces_2026_09:
+    asof: 2026-09-15      # CES September wave fieldwork
+  bls_2026_q3:
+    asof: 2026-09-25      # BLS Q3 round fieldwork (published 27 Oct 2026)
+
+statements:
+  - date: 2026-09-10
+    url: https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260910~314e508016.en.html
+
+targets:
+  bls:
+    release_date: 2026-10-27
+    # SDW labels a BLS round by its publication quarter (the July 2026 release is
+    # 2026-Q3), so the 27 Oct release is expected under 2026-Q4.
+    expected_period: 2026-Q4
+    series:
+      enterprise_standards: BLS/Q.U2.ALL.O.E.Z.B3.ST.S.WFNET
+      housing_standards: BLS/Q.U2.ALL.Z.H.H.B3.ST.S.WFNET
+      consumer_standards: BLS/Q.U2.ALL.Z.H.C.B3.ST.S.WFNET
+  ces:
+    wave: 2026-09
+    countries: [DE, FR, IT, ES]
+    series_template: CES/M.{country}.ALL.T.C1120.NUM_VAR.WM   # median 12m-ahead expectation

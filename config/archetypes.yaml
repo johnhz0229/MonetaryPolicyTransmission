@@ -1,0 +1,62 @@
+# Agent archetypes. Weights are stylised approximations of each segment's share
+# of euro area lending; they sum to 1 and are documented in PREREGISTRATION.md.
+banks:
+  - id: de_universal
+    weight: 0.10
+    country: Germany
+    description: a large listed German universal bank with a sizeable corporate and investment banking arm
+  - id: de_savings
+    weight: 0.10
+    country: Germany
+    description: a regional German savings bank (Sparkasse) focused on SMEs and fixed-rate residential mortgages
+  - id: de_cooperative
+    weight: 0.08
+    country: Germany
+    description: a German cooperative bank (Volksbank/Raiffeisenbank) lending mainly to local households and Mittelstand firms
+  - id: fr_listed
+    weight: 0.12
+    country: France
+    description: a large listed French banking group with retail, corporate and markets activities
+  - id: fr_mutual
+    weight: 0.12
+    country: France
+    description: a large French mutualist banking group, the market leader in fixed-rate housing loans
+  - id: it_large
+    weight: 0.15
+    country: Italy
+    description: a large Italian banking group with substantial holdings of Italian government bonds and a large SME loan book
+  - id: es_retail
+    weight: 0.12
+    country: Spain
+    description: a large Spanish retail bank whose mortgage book is mostly variable-rate, indexed to 12-month Euribor
+  - id: nl_large
+    weight: 0.07
+    country: Netherlands
+    description: a large Dutch bank with a big residential mortgage book funded partly by covered bonds
+  - id: other_mid
+    weight: 0.14
+    country: Austria
+    description: a mid-sized Austrian bank with retail and corporate lending in Austria and central and eastern Europe
+
+households:
+  # Stylised dominant mortgage type by country, used for mortgagor personas.
+  mortgage_type:
+    DE: fixed-rate (interest fixed for 10 years or more)
+    FR: fixed-rate (interest fixed for the whole term)
+    IT: a mix of fixed and variable rates; yours is variable-rate
+    ES: variable-rate, indexed to 12-month Euribor
+  country_names:
+    DE: Germany
+    FR: France
+    IT: Italy
+    ES: Spain
+  # Population shares of CES age bands (18-70); income quintiles are equal-weighted.
+  age_bands:
+    "18-34": 0.27
+    "35-54": 0.38
+    "55-70": 0.35
+  # Stylised tenure by age band and income quintile (1 = lowest).
+  tenure:
+    "18-34": {1: renter, 2: renter, 3: renter, 4: mortgagor, 5: mortgagor}
+    "35-54": {1: renter, 2: renter, 3: mortgagor, 4: mortgagor, 5: mortgagor}
+    "55-70": {1: renter, 2: outright_owner, 3: outright_owner, 4: outright_owner, 5: outright_owner}

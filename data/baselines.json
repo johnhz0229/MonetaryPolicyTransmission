@@ -1,0 +1,70 @@
+{
+ "fetched_at": "2026-10-02T11:43:53+00:00",
+ "bls_last_published": {
+  "enterprise_past_3m": {
+   "period": "2026-Q3",
+   "value": 7.294703918588041
+  },
+  "housing_past_3m": {
+   "period": "2026-Q3",
+   "value": 8.802079714862277
+  },
+  "consumer_past_3m": {
+   "period": "2026-Q3",
+   "value": 12.335069103724583
+  },
+  "enterprise_next_3m": {
+   "period": "2026-Q3",
+   "value": 5.264825073640774
+  },
+  "housing_next_3m": {
+   "period": "2026-Q3",
+   "value": 2.4032094774159343
+  },
+  "consumer_next_3m": {
+   "period": "2026-Q3",
+   "value": 11.358878530647177
+  }
+ },
+ "bls": {
+  "persistence": {
+   "enterprise_past_3m": 7.294703918588041,
+   "housing_past_3m": 8.802079714862277,
+   "consumer_past_3m": 12.335069103724583,
+   "enterprise_next_3m": 5.264825073640774,
+   "housing_next_3m": 2.4032094774159343,
+   "consumer_next_3m": 11.358878530647177
+  },
+  "banks_previous_expectation": {
+   "enterprise_past_3m": 5.264825073640774,
+   "housing_past_3m": 2.4032094774159343,
+   "consumer_past_3m": 11.358878530647177
+  }
+ },
+ "ces_last_published": {
+  "DE": {
+   "period": "2026-08",
+   "value": 2.9
+  },
+  "FR": {
+   "period": "2026-08",
+   "value": 2.5
+  },
+  "IT": {
+   "period": "2026-08",
+   "value": 4.0
+  },
+  "ES": {
+   "period": "2026-08",
+   "value": 3.1
+  }
+ },
+ "ces": {
+  "persistence": {
+   "DE": 2.9,
+   "FR": 2.5,
+   "IT": 4.0,
+   "ES": 3.1
+  }
+ }
+}
