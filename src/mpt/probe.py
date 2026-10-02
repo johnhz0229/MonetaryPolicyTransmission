@@ -19,9 +19,10 @@ PROBE_QUESTIONS = [
 ]
 
 SYSTEM = (
-    "Answer factual questions about European Central Bank policy from your own knowledge. "
-    "If you do not know the answer, or the date is after your knowledge ends, say so: set value to null "
-    "and known to false. Do not guess."
+    "You answer factual questions about European Central Bank monetary policy from your own training knowledge. "
+    "When you know the answer, put the deposit facility rate in percent in value and set known to true. "
+    "Only when the date lies beyond your training data, or you genuinely do not know, set value to null "
+    "and known to false."
 )
 
 

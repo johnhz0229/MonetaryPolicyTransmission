@@ -9,7 +9,7 @@ import sys
 import yaml
 
 from . import CONFIG_DIR, RESULTS_DIR, evaluate, run, snapshot
-from .llm import Budget, BudgetExceeded, Client, fetch_pricing
+from .llm import Budget, BudgetExceeded, Client, CreditsExhausted, fetch_pricing
 
 TASKS = ["probe", "bls", "ces"]
 
@@ -75,7 +75,7 @@ def main(argv: list[str] | None = None) -> int:
         out_dir = run.results_dir(cfg, dry_run)
         try:
             counts = run.run_jobs(client, jobs, out_dir, workers=args.workers)
-        except BudgetExceeded as e:
+        except (BudgetExceeded, CreditsExhausted) as e:
             print(f"stopped: {e}", file=sys.stderr)
             return 2
         print(json.dumps(counts, indent=1))

@@ -6,3 +6,9 @@ cache/
 *.egg-info/
 .venv/
 results/*-dryrun/
+docs/slides/*.aux
+docs/slides/*.log
+docs/slides/*.out
+docs/slides/*.nav
+docs/slides/*.snm
+docs/slides/*.toc

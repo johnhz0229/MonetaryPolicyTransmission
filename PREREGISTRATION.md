@@ -97,4 +97,7 @@ Baselines are fetched before freezing and saved in `data/baselines.json`:
 
 ## Deviations
 
-(none yet)
+Changes made before freezing, recorded for transparency:
+
+- **2026-10-02, knowledge probe prompt.** The first probe run used a system prompt ending "say so: set value to null and known to false. Do not guess." Qwen3-235B then refused even the 2024 control question (one answer read "set value to null"), so its probe was uninformative. The prompt now asks the model to answer from its training knowledge and to return null only when the date lies beyond its training data or it does not know. Questions, expected values and the classification rule are unchanged. No model answered a 2026 target question correctly under either prompt.
+- **2026-10-02, token limits.** DeepSeek V4 models spend tokens on reasoning, which count towards `max_tokens`. With the original caps (400 for the probe, 1,200 for forecasts) some probe calls hit the cap before producing an answer. The caps are now 2,000 (probe) and 3,000 (forecasts). No forecast had been run under the old cap.

@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from . import RESULTS_DIR, agents, probe
-from .llm import BudgetExceeded, Client
+from .llm import BudgetExceeded, Client, CreditsExhausted
 
 # BLS round being forecast: fieldwork in late September 2026, published 27 Oct 2026.
 BLS_ROUND = {"quarter_label": "October 2026", "past_window": "July to September 2026",
@@ -25,7 +25,7 @@ def job_list(cfg: dict, archetypes: dict, snapshots: dict, tasks: list[str]) -> 
                 for i in range(s["probe_samples"]):
                     jobs.append({"task": "probe", "model": m, "unit": qid, "sample": i, "expected": expected, "kind": kind,
                                  "messages": probe.probe_messages(question), "schema": probe.probe_schema(),
-                                 "temperature": 0.0 if i == 0 else s["temperature"], "max_tokens": 400})
+                                 "temperature": 0.0 if i == 0 else s["temperature"], "max_tokens": 2000})
         if "bls" in tasks:
             info = snapshots["bls_2026_q3"]
             for bank in agents.banks(archetypes):
@@ -62,7 +62,7 @@ def _run_one(client: Client, job: dict) -> dict:
         record.update(request_hash=c.request_hash, served_model=c.model, cached=c.cached, cost_usd=c.cost_usd,
                       usage=c.usage, raw_content=c.content)
         record["answer"] = c.json()
-    except BudgetExceeded:
+    except (BudgetExceeded, CreditsExhausted):
         raise
     except Exception as e:  # keep going; failures are reported, not silently dropped
         record["error"] = f"{type(e).__name__}: {e}"

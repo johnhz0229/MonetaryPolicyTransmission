@@ -25,6 +25,10 @@ API_URL = "https://openrouter.ai/api/v1/chat/completions"
 MODELS_URL = "https://openrouter.ai/api/v1/models"
 
 
+class CreditsExhausted(RuntimeError):
+    """OpenRouter returned 402: the account has no credits left. Stops the run like BudgetExceeded."""
+
+
 class BudgetExceeded(RuntimeError):
     pass
 
@@ -177,6 +181,8 @@ class Client:
             if resp.status_code in (408, 429) or resp.status_code >= 500:
                 time.sleep(min(60, 2 ** attempt + random.random()))
                 continue
+            if resp.status_code == 402:
+                raise CreditsExhausted("OpenRouter returned 402: the account has no credits left; top up and re-run.")
             if resp.status_code == 401:
                 raise RuntimeError("OpenRouter returned 401: no API key reached the API (see README, 'API key').")
             resp.raise_for_status()
